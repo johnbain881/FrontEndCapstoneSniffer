@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: whitesmoke;
 }
 
 code {
@@ -25,6 +26,9 @@ code {
   flex-grow: 2;
   display: flex;
   flex-direction: column;
+  margin-right: 1em;
+  margin-left: 1em;
+  height: 25%;
 }
 
 #LoginButtons {
@@ -50,4 +54,20 @@ code {
 #sniffsDiv {
   height: 20%;
   overflow-y: scroll;
+}
+
+.userCard {
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: gray;
+}
+
+#userList {
+  width: 40%
+}
+
+#userListH1 {
+  text-align: center;
+  color: gray;
+  background-color: darkblue;
 }

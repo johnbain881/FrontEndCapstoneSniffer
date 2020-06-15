@@ -3,9 +3,10 @@ import { Route, Redirect } from 'react-router-dom';
 import Login from './login/Login'
 import Register from './login/Register'
 import Profile from './profile/Profile'
+import UserList from './users/UserList'
 // import SniffList from './sniffs/SniffList'
 // import SideNav from './nav/SideNav'
-// import SearchBar from './search/SearchBar';
+import SearchBar from './search/SearchBar';
 
 const ApplicationViews = (props) => {
 
@@ -51,6 +52,40 @@ const ApplicationViews = (props) => {
                 <div className="placeholder"></div>
                 <Profile userId={parseInt(props.match.params.userId)} {...props} />
                 <div className="placeholder"></div>
+              </>
+            )
+          } else {
+            return <Redirect to="/"/>
+          }
+        }}
+      />
+      <Route
+        exact
+        path="/followers/:userId(\d+)"
+        render={props => {
+          if (isLoggedIn) {
+            return (
+              <>
+                <div className="placeholder"></div>
+                <UserList calledFrom="followers" userId={parseInt(props.match.params.userId)} {...props} />
+                <SearchBar />
+              </>
+            )
+          } else {
+            return <Redirect to="/"/>
+          }
+        }}
+      />
+      <Route
+        exact
+        path="/following/:userId(\d+)"
+        render={props => {
+          if (isLoggedIn) {
+            return (
+              <>
+                <div className="placeholder"></div>
+                <UserList calledFrom="following" userId={parseInt(props.match.params.userId)} {...props} />
+                <SearchBar />
               </>
             )
           } else {

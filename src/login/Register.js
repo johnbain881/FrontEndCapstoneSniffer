@@ -16,7 +16,6 @@ const Login = (props) => {
     DataManager.getAll(`users?username=${stateToChange.username}`)
     .then(users => {
       if (users.length !== 0) {
-        console.log("name already taken")
         setTaken(true)
       } else {
         setTaken(false)
@@ -32,7 +31,6 @@ const Login = (props) => {
   }
 
   function handleSubmit() {
-    console.log("I'm submitting!")
     if (user.username !== "" || user.password1 !== "" || user.password2 !== "") {
       if (!taken && !same) {
         DataManager.post("users", {username: user.username, password: user.password1, bio: "", displayName: user.username})

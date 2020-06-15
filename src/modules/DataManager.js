@@ -27,6 +27,11 @@ const DataManager = {
       },
       body: JSON.stringify(data),
     })
+  },
+  delete: (resource, id) => {
+    return fetch(`${url}${resource}/${id}`, {
+      method: 'DELETE'
+    })
   }
 }
 

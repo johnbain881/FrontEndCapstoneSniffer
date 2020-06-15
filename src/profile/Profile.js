@@ -19,7 +19,6 @@ const Profile = (props) => {
   const edit = (evt) => {
     let stateToChange = {...userEdit}
     stateToChange[evt.target.id] = evt.target.value
-    console.log(stateToChange)
     setUserEdit(stateToChange)
   }
 
@@ -32,24 +31,29 @@ const Profile = (props) => {
     toggle();
   }
 
+  const showFollowers = () => {
+    props.history.push(`/followers/${props.userId}`)
+  }
+
+  const showFollowing = () => {
+    props.history.push(`/following/${props.userId}`)
+  }
+
 
   useEffect(() => {
     let stateToChange
     DataManager.getOne("users", `${props.userId}`)
     .then(userData => {
       stateToChange = {...userData}
-      console.log(stateToChange)
     })
     .then(() => {
       DataManager.getAll(`follows?userId=${props.userId}`)
       .then(users => {
         stateToChange.followers = users.length;
-        console.log(stateToChange)
       }).then(() => {
         DataManager.getAll(`follows?userFollowingId=${props.userId}`)
         .then(users => {
           stateToChange.following = users.length;
-          console.log(stateToChange)
           setUser(stateToChange)
           setUserEdit({bio: stateToChange.bio, displayName: stateToChange.displayName})
         })
@@ -66,7 +70,9 @@ const Profile = (props) => {
       <div>@{user.username}</div>
       <div>{user.bio}</div>
 
-      <div>Followers: <Button color="link">{user.followers}</Button> Following: <Button color="link">{user.following}</Button></div>
+      <div>Followers: <Button onClick={showFollowers} color="link">{user.followers}</Button>
+       Following: <Button onClick={showFollowing} color="link">{user.following}</Button>
+       </div>
 
       <div>
 

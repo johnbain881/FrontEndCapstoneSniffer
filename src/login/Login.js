@@ -16,7 +16,6 @@ const Login = (props) => {
   function handleSubmit() {
     DataManager.getAll(`users?username=${user.username}`)
     .then(credentials => {
-      console.log(credentials)
       if (credentials.length === 0) {
         alert("User not found")
       } else {

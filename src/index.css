@@ -11,3 +11,43 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+#root {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#LoginDiv {
+  padding: 2%;
+  border-radius: 25px;
+  background-color: darkblue;
+  margin-top: 5%;
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+#LoginButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+.LoginButton {
+  width: 45%;
+}
+#password {
+  margin-top: 1em
+}
+.placeholder {
+  width: 30%;
+  background-color: darkblue;
+  height: 857px;
+}
+.red:focus, .red {
+  background-color: red
+}
+
+#sniffsDiv {
+  height: 20%;
+  overflow-y: scroll;
+}

@@ -4,8 +4,8 @@ import Login from './login/Login'
 import Register from './login/Register'
 import Profile from './profile/Profile'
 import UserList from './users/UserList'
-// import SniffList from './sniffs/SniffList'
-// import SideNav from './nav/SideNav'
+import SniffList from './sniffs/SniffList'
+import SideNav from './nav/SideNav'
 import SearchBar from './search/SearchBar';
 
 const ApplicationViews = (props) => {
@@ -16,6 +16,10 @@ const ApplicationViews = (props) => {
   const doLogin = (userId) => {
     sessionStorage.setItem("userId", userId)
     setIsLoggedIn(true)
+  }
+  const doLogout = () => {
+    sessionStorage.clear()
+    setIsLoggedIn(false)
   }
 
   return (
@@ -49,9 +53,9 @@ const ApplicationViews = (props) => {
           if (isLoggedIn) {
             return (
               <>
-                <div className="placeholder"></div>
+                <SideNav doLogout={doLogout} />
                 <Profile userId={parseInt(props.match.params.userId)} {...props} />
-                <div className="placeholder"></div>
+                <SearchBar />
               </>
             )
           } else {
@@ -66,7 +70,7 @@ const ApplicationViews = (props) => {
           if (isLoggedIn) {
             return (
               <>
-                <div className="placeholder"></div>
+                <SideNav doLogout={doLogout} />
                 <UserList calledFrom="followers" userId={parseInt(props.match.params.userId)} {...props} />
                 <SearchBar />
               </>
@@ -83,8 +87,25 @@ const ApplicationViews = (props) => {
           if (isLoggedIn) {
             return (
               <>
-                <div className="placeholder"></div>
+                <SideNav doLogout={doLogout} />
                 <UserList calledFrom="following" userId={parseInt(props.match.params.userId)} {...props} />
+                <SearchBar />
+              </>
+            )
+          } else {
+            return <Redirect to="/"/>
+          }
+        }}
+      />
+      <Route
+        exact
+        path="/feed"
+        render={props => {
+          if (isLoggedIn) {
+            return (
+              <>
+                <SideNav doLogout={doLogout} />
+                <SniffList calledFrom="feed" {...props}/>
                 <SearchBar />
               </>
             )

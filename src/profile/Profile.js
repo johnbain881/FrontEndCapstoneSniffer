@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap';
 import DataManager from '../modules/DataManager'
+import SniffModal from '../sniffs/SniffModal'
+import SniffList from '../sniffs/SniffList';
 
 
 const Profile = (props) => {
@@ -59,39 +61,51 @@ const Profile = (props) => {
         })
       })
     })
-  }, [])
+  }, [props.userId])
 
   return (
-    <div>
+    <div id="profile">
+
       <div>
         <h3>{user.displayName}</h3>
         {props.userId === parseInt(sessionStorage.getItem("userId")) ? <Button color="primary" onClick={toggle}>{buttonLabel}</Button> : null}
+        {props.userId === parseInt(sessionStorage.getItem("userId")) ? <SniffModal /> : null}
       </div>
-      <div>@{user.username}</div>
-      <div>{user.bio}</div>
-
-      <div>Followers: <Button onClick={showFollowers} color="link">{user.followers}</Button>
-       Following: <Button onClick={showFollowing} color="link">{user.following}</Button>
-       </div>
 
       <div>
+        @{user.username}
+      </div>
 
-      <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>
-          Edit Profile
-        </ModalHeader>
-        <ModalBody>
-          <Label for="displayName">Display Name</Label>
-          <Input onChange={edit} placeholder="Display Name" id="displayName" defaultValue={user.displayName}></Input>
-          <Label for="bio">Bio</Label>
-          <Input onChange={edit} placeholder="Bio" id="bio" defaultValue={user.bio}></Input>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={saveEdit}>Save</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
-        </ModalFooter>
-      </Modal>
-    </div>
+      <div>
+        {user.bio}
+      </div>
+
+      <div>
+        Followers: <Button onClick={showFollowers} color="link">{user.followers}</Button>
+        Following: <Button onClick={showFollowing} color="link">{user.following}</Button>
+      </div>
+
+      <div>
+        <SniffList calledFrom="profile" userId={props.userId} {...props} />
+      </div>
+
+      <div>
+        <Modal isOpen={modal} toggle={toggle} className={className}>
+          <ModalHeader toggle={toggle}>
+            Edit Profile
+          </ModalHeader>
+          <ModalBody>
+            <Label for="displayName">Display Name</Label>
+            <Input onChange={edit} placeholder="Display Name" id="displayName" defaultValue={user.displayName}></Input>
+            <Label for="bio">Bio</Label>
+            <Input onChange={edit} type="textarea" placeholder="Bio" id="bio" defaultValue={user.bio}></Input>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={saveEdit}>Save</Button>{' '}
+            <Button color="secondary" onClick={toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
 
     </div>
   )

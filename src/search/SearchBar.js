@@ -12,8 +12,10 @@ const SearchBar = () => {
 
   return (
     <div className="placeholder">
-      <Input type="text" onChange={doSearch} placeholder="Search for friends" />
-      <UserList calledFrom="search" search={search}/>
+      <div id="searchBar">
+        <Input type="text" onChange={doSearch} placeholder="Search for friends" />
+        <UserList calledFrom="search" search={search}/>
+      </div>
     </div>
   )
 }

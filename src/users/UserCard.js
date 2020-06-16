@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button } from 'reactstrap'
+import { Button, CardLink} from 'reactstrap'
 import DataManager from '../modules/DataManager'
 
 
@@ -18,7 +18,7 @@ const UserCard = (props) => {
         setUser({displayName: thisUser.displayName, username: thisUser.username, id: thisUser.id, isFollowing: users.length !== 0})
       })
     })
-  }, [])
+  }, [props.userId])
 
   const changeFollowStatus = (evt) => {
     const stateToChange = {...user}
@@ -38,23 +38,19 @@ const UserCard = (props) => {
   }
 
   return (
-    <div className="userCard">
-      <div>
-        <h4>{user.displayName}</h4>
-        <p>@{user.username}</p>
+    <div>
+      <div className="userCard">
+        <div>
+          <h4>{user.displayName}</h4>
+          <CardLink href={`/profile/${props.userId}`}>@{user.username}</CardLink>
+        </div>
+        <div>
+          {props.userId === parseInt(sessionStorage.getItem("userId")) ? null : <Button color="primary" onClick={changeFollowStatus} active={user.isFollowing}>{user.isFollowing ? "Following" : "Follow"}</Button>}
+        </div>
       </div>
-      <div>
-        <Button color="primary" onClick={changeFollowStatus} active={user.isFollowing}>{user.isFollowing ? "Following" : "Follow"}</Button>
-      </div>
+      <hr/>
     </div>
   )
 }
 
 export default UserCard
-
-// ,
-//     {
-//       "id": 3,
-//       "userId": 12,
-//       "userFollowingId": 10
-//     }

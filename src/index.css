@@ -52,7 +52,7 @@ code {
 }
 
 #sniffsDiv {
-  height: 20%;
+  height: 800px;
   overflow-y: scroll;
 }
 
@@ -62,12 +62,32 @@ code {
   border-bottom: gray;
 }
 
-#userList {
-  width: 40%
-}
-
 #userListH1 {
   text-align: center;
   color: gray;
   background-color: darkblue;
+}
+
+#searchBar {
+  padding: 1em;
+  color: gray;
+}
+
+#userList, #profile, #sniffsList {
+  width: 50%;
+}
+
+#tooMuch {
+  color: red
+}
+
+#feedHeading {
+  display: flex;
+  background-color: darkblue;
+  color: gray;
+  justify-content: space-between;
+}
+
+.sniffUsername {
+  opacity: 80%;
 }

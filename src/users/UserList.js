@@ -24,6 +24,12 @@ const UserList = (props) => {
         })
         break;
       case "likes":
+        DataManager.getAll(`likes?sniffId=${props.sniffId}`)
+        .then(likes => {
+          console.log(likes)
+          stateToChange = likes.map(like => like.userId)
+          setUserArray(stateToChange)
+        })
         break;
       case "search":
         if (props.search !== "") {
@@ -37,7 +43,7 @@ const UserList = (props) => {
       default:
         break;
     }
-  }, [props.search, props.calledFrom, props.userId])
+  }, [props.search, props.calledFrom, props.userId, props.sniffId])
   return (
     <div id={props.calledFrom !== "search" ? "userList" : ""}>
       {props.calledFrom !== "search" ? <h1 id="userListH1">{props.calledFrom}</h1> : null}

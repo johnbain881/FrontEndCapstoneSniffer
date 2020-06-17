@@ -8,29 +8,43 @@ const SniffList = (props) => {
 
   const [sniffArray, setSniffArray] = useState([])
 
+  function sortByTimestamp(a, b) {
+    if (a.timestamp > b.timestamp) {
+      return -1
+    }
+    if (a.timestamp < b.timestamp) {
+      return 1
+    }
+    return 0
+  }
+
   useEffect(() => {
     let stateToChange = [];
+    let userIds = [];
+    let feedSniffs = []
     switch(props.calledFrom) {
       case "feed":
         DataManager.getAll(`follows?userFollowingId=${parseInt(sessionStorage.getItem("userId"))}`)
         .then(usersFollowed => {
-          console.log(usersFollowed)
-          stateToChange = usersFollowed.map(users => users.userId)
+          userIds = usersFollowed.map(users => users.userId)
+          userIds.push(parseInt(sessionStorage.getItem("userId")))
+          userIds.forEach(userId => {
+            DataManager.getAll(`sniffs?userId=${userId}`)
+            .then(sniffs => {
+              feedSniffs = feedSniffs.concat(sniffs)
+            })
+            .then(() => {
+              feedSniffs.sort(sortByTimestamp)
+              stateToChange = feedSniffs.map(sniff => sniff.id)
+              setSniffArray(stateToChange)
+            })
+          })
         })
 
         break;
       case "profile":
         DataManager.getAll(`sniffs?userId=${props.userId}`)
         .then(sniffs => {
-          function sortByTimestamp(a, b) {
-            if (a.timestamp > b.timestamp) {
-              return -1
-            }
-            if (a.timestamp < b.timestamp) {
-              return 1
-            }
-            return 0
-          }
           sniffs.sort(sortByTimestamp)
           stateToChange = sniffs.map(sniff => sniff.id)
         })
@@ -41,10 +55,10 @@ const SniffList = (props) => {
       default:
         break;
     }
-  }, [props.calledFrom])
+  }, [props.calledFrom, props.userId])
 
   return (
-    <div id={props.calledFrom === "feed" ? "sniffsList" : ""}>
+    <div id={props.calledFrom === "feed" ? "sniffsListFeed" : "sniffsListProfile"}>
 
       {props.calledFrom === "feed" ? 
       <div id="feedHeading">
@@ -53,8 +67,8 @@ const SniffList = (props) => {
       </div> 
       : null}
      
-      <div id="sniffsDiv">
-        {sniffArray.map(sniffId => <SniffCard key={sniffId} sniffId={sniffId} />)}
+      <div id="">
+        {sniffArray.map(sniffId => <SniffCard {...props} key={sniffId} sniffId={sniffId} />)}
       </div>
     </div>
   )

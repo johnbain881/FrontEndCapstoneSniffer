@@ -51,8 +51,8 @@ code {
   background-color: red
 }
 
-#sniffsDiv {
-  height: 800px;
+#sniffsListFeed {
+  height: 850px;
   overflow-y: scroll;
 }
 
@@ -73,8 +73,13 @@ code {
   color: gray;
 }
 
-#userList, #profile, #sniffsList {
+#userList, #profile, #sniffsListFeed {
   width: 50%;
+}
+
+#sniffsListProfile {
+  height: 625px;
+  overflow-y: scroll;
 }
 
 #tooMuch {

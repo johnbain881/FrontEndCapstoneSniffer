@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Card, CardTitle, CardText, Button, CardSubtitle } from 'reactstrap'
+import { Card, CardTitle, CardText, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import DataManager from '../modules/DataManager'
 
 
 const SniffCard = (props) => {
 
-  const [sniff, setSniff] = useState({id: props.sniffId, body: "", timestamp: 0, userId: 0, user: {displayName: "", username: ""}})
+  const [sniff, setSniff] = useState({id: props.sniffId, body: "", timestamp: 0, userId: 0, user: {displayName: "", username: "", profilePicUrl: ""}})
   const [liked, setLiked] = useState({status: false, likeId: 0})
   const [numLikes, setNumLikes] = useState(0)
 
@@ -63,13 +63,27 @@ const SniffCard = (props) => {
 
   return (
     <Card body>
-      <CardTitle><Link to={`/profile/${sniff.userId}`} color="link">{sniff.user.displayName}</Link></CardTitle>
-      <CardSubtitle><Link to={`/profile/${sniff.userId}`} className="sniffUsername" color="link">@{sniff.user.username}</Link></CardSubtitle>
+      <CardTitle>
+        <Link to={`/profile/${sniff.userId}`} color="link" className="sniffCardPhotoAndUsername">
+          <img src={sniff.user.profilePicUrl} alt="" height={75} width={75}/>
+          <div className='sniffCardUsername'>
+            <div>
+              {sniff.user.displayName}
+            </div>
+            <div>
+              @{sniff.user.username}
+            </div>
+          </div>
+        </Link>
+        </CardTitle>
       <CardText>{sniff.body}</CardText>
-      <CardText>{timeSince()}</CardText>
-      <div>
-      <Button color="primary" onClick={changeLikeStatus} active={liked.status}>{liked.status ? "Unlike" : "Like"}</Button>
-      <Link to={`/likes/${sniff.id}`}>{numLikes}</Link>
+      <div className="elapsedTimeAndLikes">
+        <h6 className="elapsedTime">{timeSince()} ago</h6>
+        <div>
+          <Button color="primary" onClick={changeLikeStatus} active={liked.status}>{liked.status ? "Unlike" : "Like"}</Button>
+          {'  '}
+          <Link to={`/likes/${sniff.id}`}>{numLikes}</Link>
+        </div>
       </div>
     </Card>
   )

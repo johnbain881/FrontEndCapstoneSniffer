@@ -1,13 +1,49 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap';
+// import cloudinary from 'https://widget.cloudinary.com/v2.0/global/all.js'
+// import cloudinary from 'cloudinary-core'
 import DataManager from '../modules/DataManager'
 import SniffModal from '../sniffs/SniffModal'
 import SniffList from '../sniffs/SniffList';
 
 
 const Profile = (props) => {
-  const [user, setUser] = useState({id: "", username: "", password: "", bio: "", displayName: "", followers: 0, following: 0})
+  const [user, setUser] = useState({id: "", username: "", password: "", bio: "", displayName: "", followers: 0, following: 0, profilePicUrl: ""})
   const [userEdit, setUserEdit] = useState({bio: "", displayName: ""})
+  const [following, setFollowing] = useState(false)
+  const [followId, setFollowId] = useState(0)
+
+
+  // var cl = new cloudinary.Cloudinary({cloud_name: "johnbain", secure: true});
+  var widget = window.cloudinary.createUploadWidget({
+    cloudName: "johnbain", uploadPreset: "unsigneduploadpreset"
+  }, (error, result) => {getResults(result)});
+
+  function getResults(result) {
+    if (result.event === "success") {
+      let stateToChange = {...user}
+      stateToChange.profilePicUrl = result.info.secure_url
+      DataManager.put("users", user.id, stateToChange)
+      setUser(stateToChange)
+    }
+  }
+
+  const changeFollowStatus = (evt) => {
+    let stateToChange = following
+    stateToChange = !stateToChange
+    setFollowing(stateToChange)
+    if (!stateToChange) {
+      DataManager.delete("follows", followId)
+    } else {
+      DataManager.post("follows", {userId: props.userId, userFollowingId: parseInt(sessionStorage.getItem("userId"))})
+      .then(() => {
+        DataManager.getAll(`follows?userId=${props.userId}&userFollowingId=${parseInt(sessionStorage.getItem("userId"))}`)
+        .then(users => {
+          setFollowId(users[0].id)
+        })
+      })
+    }
+  }
   
   const {
     buttonLabel = "Edit Profile",
@@ -61,51 +97,65 @@ const Profile = (props) => {
         })
       })
     })
+    DataManager.getAll(`follows?userId=${props.userId}&userFollowingId=${parseInt(sessionStorage.getItem("userId"))}`)
+    .then(follows => {
+      if (follows.length !== 0) {
+        setFollowing(true)
+        setFollowId(follows[0].id)
+      }
+    })
   }, [props.userId])
 
   return (
     <div id="profile">
+      <div id="header">
+        <div>
+          <img src={user.profilePicUrl} alt="" width={150} height={150} />
+          <h3>{user.displayName}</h3>
+          <div>
+            @{user.username}
+          </div>
+          <div id="profileButtons">
+            {props.userId === parseInt(sessionStorage.getItem("userId")) ? <Button color="primary" onClick={toggle}>{buttonLabel}</Button> : null}
+            {props.userId === parseInt(sessionStorage.getItem("userId")) ? <SniffModal /> : null}
+            {props.userId === parseInt(sessionStorage.getItem("userId")) ? <Button color="primary" onClick={() => widget.open()}>Add a photo</Button> : null}
+            {props.userId === parseInt(sessionStorage.getItem("userId")) ? null : <Button color="primary" onClick={changeFollowStatus} active={following}>{following ? "Following" : "Follow"}</Button>}
+          </div>
+        </div>
 
-      <div>
-        <h3>{user.displayName}</h3>
-        {props.userId === parseInt(sessionStorage.getItem("userId")) ? <Button color="primary" onClick={toggle}>{buttonLabel}</Button> : null}
-        {props.userId === parseInt(sessionStorage.getItem("userId")) ? <SniffModal /> : null}
+
+        <div>
+          {user.bio}
+        </div>
+
+        <div>
+          Followers: <Button onClick={showFollowers} color="link">{user.followers}</Button>
+          Following: <Button onClick={showFollowing} color="link">{user.following}</Button>
+        </div>
+
+        <div>
+          <Modal isOpen={modal} toggle={toggle} className={className}>
+            <ModalHeader toggle={toggle}>
+              Edit Profile
+            </ModalHeader>
+            <ModalBody>
+              <Label for="displayName">Display Name</Label>
+              <Input onChange={edit} placeholder="Display Name" id="displayName" defaultValue={user.displayName}></Input>
+              <Label for="bio">Bio</Label>
+              <Input onChange={edit} type="textarea" placeholder="Bio" id="bio" defaultValue={user.bio}></Input>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={saveEdit}>Save</Button>{' '}
+              <Button color="secondary" onClick={toggle}>Cancel</Button>
+            </ModalFooter>
+          </Modal>
+        </div>
       </div>
 
-      <div>
-        @{user.username}
-      </div>
-
-      <div>
-        {user.bio}
-      </div>
-
-      <div>
-        Followers: <Button onClick={showFollowers} color="link">{user.followers}</Button>
-        Following: <Button onClick={showFollowing} color="link">{user.following}</Button>
-      </div>
-
-      <div>
+      <div id="content">
         <SniffList calledFrom="profile" userId={props.userId} {...props} />
       </div>
 
-      <div>
-        <Modal isOpen={modal} toggle={toggle} className={className}>
-          <ModalHeader toggle={toggle}>
-            Edit Profile
-          </ModalHeader>
-          <ModalBody>
-            <Label for="displayName">Display Name</Label>
-            <Input onChange={edit} placeholder="Display Name" id="displayName" defaultValue={user.displayName}></Input>
-            <Label for="bio">Bio</Label>
-            <Input onChange={edit} type="textarea" placeholder="Bio" id="bio" defaultValue={user.bio}></Input>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={saveEdit}>Save</Button>{' '}
-            <Button color="secondary" onClick={toggle}>Cancel</Button>
-          </ModalFooter>
-        </Modal>
-      </div>
 
     </div>
   )

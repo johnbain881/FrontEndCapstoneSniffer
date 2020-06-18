@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: whitesmoke;
+  background-color: #E8E8E8;
 }
 
 code {
@@ -21,7 +21,7 @@ code {
 #LoginDiv {
   padding: 2%;
   border-radius: 25px;
-  background-color: darkblue;
+  background-color: #5588A3;
   margin-top: 5%;
   flex-grow: 2;
   display: flex;
@@ -29,6 +29,10 @@ code {
   margin-right: 1em;
   margin-left: 1em;
   height: 25%;
+}
+
+#LoginHeader {
+  text-align: center;
 }
 
 #LoginButtons {
@@ -44,7 +48,7 @@ code {
 }
 .placeholder {
   width: 30%;
-  background-color: darkblue;
+  background-color: #5588A3;
   height: 857px;
 }
 .red:focus, .red {
@@ -52,34 +56,36 @@ code {
 }
 
 #sniffsListFeed {
-  height: 850px;
+  height: 857px;
   overflow-y: scroll;
+  background-color: #5588A3;
 }
 
 .userCard {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   border-bottom: gray;
+  padding: 1em 2em 0 2em;
 }
 
 #userListH1 {
   text-align: center;
-  color: gray;
-  background-color: darkblue;
+  color: #2b2d2f;
+  background-color: #5588A3;
 }
 
 #searchBar {
   padding: 1em;
-  color: gray;
+  color: #2b2d2f;
 }
 
 #userList, #profile, #sniffsListFeed {
   width: 50%;
 }
 
-#sniffsListProfile {
-  height: 625px;
-  overflow-y: scroll;
+
+img {
+  border-radius: 50%;
 }
 
 #tooMuch {
@@ -88,11 +94,84 @@ code {
 
 #feedHeading {
   display: flex;
-  background-color: darkblue;
-  color: gray;
+  background-color: #5588A3;
+  color: #2b2d2f;
   justify-content: space-between;
 }
 
-.sniffUsername {
-  opacity: 80%;
+.sniffCardUsername {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
+.sniffCardPhotoAndUsername {
+  display: flex;
+}
+
+.elapsedTimeAndLikes {
+  display: flex;
+  justify-content: space-between;
+}
+
+#profile {
+  /* background-color: ; */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#header {
+  flex: 0 0 auto;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: .5em;
+}
+
+#content {
+  overflow-y:scroll;
+  flex: 0 1 auto;
+}
+
+.elapsedTime {
+  margin-top: .5em;
+}
+
+.newSniffOnFeed {
+  margin-top: .5em;
+  margin-right: .5em;
+}
+
+a.nav-link {
+  color: #2b2d2f;
+}
+
+#profileButtons {
+  display: flex;
+}
+
+.userCardProfileLink a{
+  display: flex;
+  color: #2b2d2f;
+}
+
+#userList {
+  height: 857px;
+  overflow-y: scroll;
+}
+
+.card-body {
+  margin-top: 1em;
+  margin-right: 1em;
+  margin-left: 1em;
+  border-radius: 25px;
+  background-color: #E8E8E8;
+}
+.form-control {
+  background-color: #E8E8E8;
+}
+
+.registerInput {
+  margin-top: 1em;
 }

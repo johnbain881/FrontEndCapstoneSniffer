@@ -36,6 +36,7 @@ const Login = (props) => {
     <>
     <div className="placeholder"></div>
       <div id="LoginDiv">
+        <h1 id="LoginHeader">Welcome to Sniffer</h1>
         <Input onChange={handleChange} className="loginInput" id="username" type="text" placeholder="Username"></Input>
         <Input onChange={handleChange} className="loginInput" id="password" type="password" placeholder="Password"></Input>
         <div id="LoginButtons">

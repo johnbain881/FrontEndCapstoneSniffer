@@ -63,7 +63,7 @@ const SniffList = (props) => {
       {props.calledFrom === "feed" ? 
       <div id="feedHeading">
         <h1>Feed</h1>
-        <SniffModal />
+        <SniffModal calledFrom="feed"/>
       </div> 
       : null}
      

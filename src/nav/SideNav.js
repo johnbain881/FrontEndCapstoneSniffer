@@ -5,7 +5,7 @@ import { Nav, NavItem, NavLink } from "reactstrap"
 const SideNav = (props) => {
 
   return (
-    <div className="placeholder">
+    <div id="sideNav" className="placeholder">
       <Nav vertical>
         <NavItem>
           <NavLink href="/feed">Home</NavLink>

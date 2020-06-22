@@ -31,7 +31,7 @@ const SniffModal = (props) => {
 
   return (
     <div>
-      <Button color="primary" className={props.calledFrom === "feed" ? "newSniffOnFeed" : null} onClick={toggle}>{buttonLabel}</Button>
+      <Button color="primary" id={props.calledFrom === "feed" ? "newSniffOnFeed" : ""} onClick={toggle}>{buttonLabel}</Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>New Sniff</ModalHeader>
         <ModalBody>

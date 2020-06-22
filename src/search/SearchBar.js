@@ -11,7 +11,7 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="placeholder">
+    <div id="searchBarBox" className="placeholder">
       <div id="searchBar">
         <Input type="text" onChange={doSearch} placeholder="Search for friends" />
         <UserList calledFrom="search" search={search}/>

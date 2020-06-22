@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label } from 'reactstrap';
-// import cloudinary from 'https://widget.cloudinary.com/v2.0/global/all.js'
-// import cloudinary from 'cloudinary-core'
 import DataManager from '../modules/DataManager'
 import SniffModal from '../sniffs/SniffModal'
 import SniffList from '../sniffs/SniffList';
@@ -14,7 +12,6 @@ const Profile = (props) => {
   const [followId, setFollowId] = useState(0)
 
 
-  // var cl = new cloudinary.Cloudinary({cloud_name: "johnbain", secure: true});
   var widget = window.cloudinary.createUploadWidget({
     cloudName: "johnbain", uploadPreset: "unsigneduploadpreset"
   }, (error, result) => {getResults(result)});
@@ -110,27 +107,38 @@ const Profile = (props) => {
     <div id="profile">
       <div id="header">
         <div>
-          <img src={user.profilePicUrl} alt="" width={150} height={150} />
-          <h3>{user.displayName}</h3>
-          <div>
-            @{user.username}
+          <div id="picAndNames">
+            <img src={user.profilePicUrl} alt="" width={150} height={150} />
+            <div id="usernameAndDisplayname">
+              <h3>{user.displayName}</h3>
+              <div>
+                @{user.username}
+              </div>
+            </div>
           </div>
-          <div id="profileButtons">
-            {props.userId === parseInt(sessionStorage.getItem("userId")) ? <Button color="primary" onClick={toggle}>{buttonLabel}</Button> : null}
-            {props.userId === parseInt(sessionStorage.getItem("userId")) ? <SniffModal /> : null}
-            {props.userId === parseInt(sessionStorage.getItem("userId")) ? <Button color="primary" onClick={() => widget.open()}>Add a photo</Button> : null}
-            {props.userId === parseInt(sessionStorage.getItem("userId")) ? null : <Button color="primary" onClick={changeFollowStatus} active={following}>{following ? "Following" : "Follow"}</Button>}
+          <div id="followsAndButtons">
+            <div id="profileFollows">
+              <div>
+                Followers: <Button onClick={showFollowers} color="link">{user.followers}</Button>
+              </div>
+              <div>
+                Following: <Button onClick={showFollowing} color="link">{user.following}</Button>
+              </div>
+            </div>
+            <div id="profileButtons">
+              {props.userId === parseInt(sessionStorage.getItem("userId")) ? <Button color="primary" onClick={toggle}>{buttonLabel}</Button> : null}
+              {props.userId === parseInt(sessionStorage.getItem("userId")) ? <SniffModal /> : null}
+              {props.userId === parseInt(sessionStorage.getItem("userId")) ? <Button color="primary" onClick={() => widget.open()}>Add a photo</Button> : null}
+              {props.userId === parseInt(sessionStorage.getItem("userId")) ? null : <Button color="primary" onClick={changeFollowStatus} active={following}>{following ? "Following" : "Follow"}</Button>}
+            </div>
           </div>
         </div>
 
+        <div id="bioAndFollows">
+          <div id="bio">
+            {user.bio}
+          </div>
 
-        <div>
-          {user.bio}
-        </div>
-
-        <div>
-          Followers: <Button onClick={showFollowers} color="link">{user.followers}</Button>
-          Following: <Button onClick={showFollowing} color="link">{user.following}</Button>
         </div>
 
         <div>

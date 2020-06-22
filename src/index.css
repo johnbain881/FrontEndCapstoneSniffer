@@ -59,6 +59,16 @@ code {
   height: 857px;
   overflow-y: scroll;
   background-color: #5588A3;
+  padding-left: .5em;
+}
+::-webkit-scrollbar {
+  background: #5588A3;        /* color of the tracking area */
+  width: .5em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2b2d2f;
+  border-radius: 20px;
 }
 
 .userCard {
@@ -116,10 +126,11 @@ img {
 }
 
 #profile {
-  /* background-color: ; */
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 50%;
+  background-color: #5588A3;
 }
 
 #header {
@@ -132,6 +143,7 @@ img {
 #content {
   overflow-y:scroll;
   flex: 0 1 auto;
+  margin-left: .5em;
 }
 
 .elapsedTime {
@@ -174,4 +186,53 @@ a.nav-link {
 
 .registerInput {
   margin-top: 1em;
+}
+
+#sideNav {
+  margin-right: 1em;
+}
+
+#searchBarBox {
+  margin-left: 1em;
+}
+
+#newSniffOnFeed {
+  margin-right: .5em;
+  margin-top: .5em;
+}
+
+#profileFollows {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+#profileFollows div {
+  background-color: #E8E8E8;
+  border-radius: 5px;
+  margin-right: 1em;
+  padding-left: .75em;
+}
+
+#followsAndButtons {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  margin-top: .5em;
+}
+
+#picAndNames {
+  display: flex;
+}
+
+#usernameAndDisplayname {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: .5em;
+}
+
+#bio {
+  padding: .5em 0;
+  border-bottom: 1.5px solid #2b2d2f;
+  margin-bottom: 7px;
 }

@@ -26,7 +26,6 @@ const UserList = (props) => {
       case "likes":
         DataManager.getAll(`likes?sniffId=${props.sniffId}`)
         .then(likes => {
-          console.log(likes)
           stateToChange = likes.map(like => like.userId)
           setUserArray(stateToChange)
         })
@@ -39,6 +38,13 @@ const UserList = (props) => {
             setUserArray(stateToChange)
           })
         }
+        break;
+      case "resniffs":
+        DataManager.getAll(`resniffs?sniffId=${props.sniffId}`)
+        .then(resniffs => {
+          stateToChange = resniffs.map(resniff => resniff.userId)
+          setUserArray(stateToChange)
+        })
         break;
       default:
         break;

@@ -116,6 +116,23 @@ const ApplicationViews = (props) => {
       />
       <Route
         exact
+        path="/resniffs/:sniffId(\d+)"
+        render={props => {
+          if (isLoggedIn) {
+            return (
+              <>
+                <SideNav doLogout={doLogout} />
+                <UserList calledFrom="resniffs" sniffId={parseInt(props.match.params.sniffId)} {...props} />
+                <SearchBar />
+              </>
+            )
+          } else {
+            return <Redirect to="/"/>
+          }
+        }}
+      />
+      <Route
+        exact
         path="/feed"
         render={props => {
           if (isLoggedIn) {

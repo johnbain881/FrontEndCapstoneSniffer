@@ -236,3 +236,11 @@ a.nav-link {
   border-bottom: 1.5px solid #2b2d2f;
   margin-bottom: 7px;
 }
+
+.deleteSniffButton {
+  margin-right: 1em;
+}
+
+.resniffLink {
+  margin-right: .5em;
+}

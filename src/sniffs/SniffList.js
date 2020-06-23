@@ -31,11 +31,18 @@ const SniffList = (props) => {
           userIds.forEach(userId => {
             DataManager.getAll(`sniffs?userId=${userId}`)
             .then(sniffs => {
+              console.log(sniffs)
               feedSniffs = feedSniffs.concat(sniffs)
+            })
+            DataManager.getAll(`resniffs?userId=${userId}`)
+            .then(resniffs => {
+              console.log(resniffs)
+              feedSniffs = feedSniffs.concat(resniffs)
             })
             .then(() => {
               feedSniffs.sort(sortByTimestamp)
-              stateToChange = feedSniffs.map(sniff => sniff.id)
+              stateToChange = feedSniffs.map(sniffs => sniffs.sniffId ? {id: sniffs.sniffId, resniff: sniffs.userId} : {id: sniffs.id, resniff: 0})
+              console.log("stateToChange", stateToChange)
               setSniffArray(stateToChange)
             })
           })
@@ -45,8 +52,14 @@ const SniffList = (props) => {
       case "profile":
         DataManager.getAll(`sniffs?userId=${props.userId}`)
         .then(sniffs => {
-          sniffs.sort(sortByTimestamp)
-          stateToChange = sniffs.map(sniff => sniff.id)
+          feedSniffs = feedSniffs.concat(sniffs)
+          DataManager.getAll(`resniffs?userId=${props.userId}`)
+          .then(resniffs => {
+            feedSniffs = feedSniffs.concat(resniffs)
+            feedSniffs.sort(sortByTimestamp)
+            stateToChange = feedSniffs.map(sniffs => sniffs.sniffId ? {id: sniffs.sniffId, resniff: sniffs.userId} : {id: sniffs.id, resniff: 0})
+            setSniffArray(stateToChange)
+          })
         })
         .then(() => {
           setSniffArray(stateToChange)
@@ -68,7 +81,7 @@ const SniffList = (props) => {
       : null}
      
       <div id="">
-        {sniffArray.map(sniffId => <SniffCard {...props} key={sniffId} sniffId={sniffId} />)}
+        {sniffArray.map(sniffId => <SniffCard {...props} resniff={sniffId.resniff} key={sniffId.id} sniffId={sniffId.id} />)}
       </div>
     </div>
   )

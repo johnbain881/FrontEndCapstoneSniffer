@@ -41,4 +41,4 @@ This project utilizes the following:
 
 ## database
 
-1. ![database diagram](C:\Users\John Bain\Pictures)
+![database diagram](C:\Users\John Bain\Pictures)

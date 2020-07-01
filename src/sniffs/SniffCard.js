@@ -101,7 +101,6 @@ const SniffCard = (props) => {
   }
 
   const handleDelete = (sniffId) => {
-    console.log(sniffId)
     DataManager.delete("sniffs", sniffId)
     window.location.reload()
   }

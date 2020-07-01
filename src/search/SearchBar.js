@@ -9,7 +9,7 @@ const SearchBar = () => {
   const doSearch = (evt) => {
     setSearch(evt.target.value)
   }
-
+  //returns an input box that gets a user list that grabs the data with a query for whatever was typed in the box
   return (
     <div id="searchBarBox" className="placeholder">
       <div id="searchBar">

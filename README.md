@@ -38,7 +38,3 @@ This project utilizes the following:
 1. Modular code
 1. Semantic HTML
 
-
-## database
-
-![database diagram](C:/Users/John Bain/Pictures)
